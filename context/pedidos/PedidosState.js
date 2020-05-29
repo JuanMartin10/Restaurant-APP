@@ -5,7 +5,9 @@ import PedidosContext from './PedidosContext'
 import {
     SELECCIONAR_PRODUCTO,
     CONFIRMAR_ORDENAR_PLATO,
-    MOSTRAR_RESUMEN
+    MOSTRAR_RESUMEN,
+    ELIMINAR_PRODUCTO,
+    PEDIDO_ORDENADO
 } from '../../types'
 
 const PedidosState = props => {
@@ -14,7 +16,8 @@ const PedidosState = props => {
     const initialState = {
         pedido: [],
         plate: null,
-        total: 0
+        total: 0,
+        idpedido: ''
     }
 
     // useReducer con dispatch para ejecutar las funciones
@@ -44,14 +47,31 @@ const PedidosState = props => {
         })
     }
 
+    // Elimina un articulo del carrito
+    const eliminarProducto = id => {
+        dispatch({
+            type: ELIMINAR_PRODUCTO,
+            payload: id
+        })
+    }
+    const pedidoRealizado = id => {
+        dispatch({
+            type: PEDIDO_ORDENADO,
+            payload: id
+        })
+    }
+
     return (
         <PedidosContext.Provider
             value={{
                 pedido: state.pedido,
                 plate: state.plate,
+                idpedido: state.idpedido,
                 selectPlate,
                 guardarPedido,
-                mostrarResumen
+                mostrarResumen,
+                eliminarProducto,
+                pedidoRealizado
             }}
         >
             {props.children}
